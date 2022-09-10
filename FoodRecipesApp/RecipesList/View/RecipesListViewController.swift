@@ -11,7 +11,6 @@ class RecipesListViewController: UIViewController {
 
     var presenter: RecipesListOutput!
     private let cellIdentifier = "recipeCell"
-    var imageData = Data()
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -27,6 +26,7 @@ class RecipesListViewController: UIViewController {
         return collection
     }()
     
+    //MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,6 +38,7 @@ class RecipesListViewController: UIViewController {
         setConstraints()
     }
     
+    //MARK: - private methods
     private func setupNavigationBar() {
         title = "Food Recipes"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -60,15 +61,17 @@ class RecipesListViewController: UIViewController {
     }
 }
 
+//MARK: - UICollectionViewDelegate
 extension RecipesListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
 }
 
+//MARK: - UICollectionViewDataSource
 extension RecipesListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        presenter?.recipes?.count ?? 0
+        presenter?.numberOfItems() ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -76,6 +79,7 @@ extension RecipesListViewController: UICollectionViewDataSource {
         let recipe = presenter.recipes?[indexPath.item]
         cell.nameLabel.text = recipe?.title
         cell.ingredientsCountLabel.text = "\(recipe?.extendedIngredients.count ?? 0) ingredients"
+        guard presenter.recipes?.count ?? 0 >= indexPath.item else { return UICollectionViewCell() }
         if let imageData = presenter.imageData?[indexPath.item] {
             cell.imageView.image = UIImage(data: imageData)
         }
@@ -84,13 +88,9 @@ extension RecipesListViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: - RecipesListInput
 extension RecipesListViewController: RecipesListInput {
-    
-    func success() {
+    func getRecipes() {
         collectionView.reloadData()
-    }
-    
-    func failure(error: Error) {
-        print(error.localizedDescription)
     }
 }
