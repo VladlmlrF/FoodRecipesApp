@@ -21,7 +21,7 @@ protocol NetworkManager: AnyObject {
 class NetworkManagerImplementation: NetworkManager {
     
     func fetchData(_ completion: @escaping(Result<FoodRecipes, NetworkError>) -> ()) {
-        guard let url = URL(string: "https://api.spoonacular.com/recipes/random?number=15&apiKey=8badfaa24f6a43f4998718a795e6a40a") else {
+        guard let url = URL(string: "https://api.spoonacular.com/recipes/random?number=25&apiKey=8badfaa24f6a43f4998718a795e6a40a") else {
             completion(.failure(.invalidURL))
             return
         }
