@@ -7,20 +7,22 @@
 
 import Foundation
 
-
+//MARK: - RecipesList input protocol
 protocol RecipesListInput: AnyObject {
-    func success()
-    func failure(error: Error)
+    func getRecipes()
 }
 
+//MARK: - RecipesList output protocol
 protocol RecipesListOutput: AnyObject {
     var recipes: [Recipe]? { get set }
     var imageData: [Data]? { get set }
     init(view: RecipesListInput, networkManager: NetworkManager)
     func fetchRecipes()
     func fetchImageData(recipes: [Recipe])
+    func numberOfItems() -> Int
 }
 
+//MARK: - RecipesListViewPresenter
 class RecipesListViewPresenter: RecipesListOutput {
     var imageData: [Data]?
     weak var view: RecipesListInput!
@@ -39,9 +41,9 @@ class RecipesListViewPresenter: RecipesListOutput {
             case .success(let foodRecipes):
                 self?.recipes = foodRecipes.recipes
                 self?.fetchImageData(recipes: foodRecipes.recipes)
-                self?.view.success()
+                self?.view.getRecipes()
             case .failure(let error):
-                self?.view.failure(error: error)
+                print(error.localizedDescription)
             }
         }
     }
@@ -59,5 +61,9 @@ class RecipesListViewPresenter: RecipesListOutput {
             }
         }
         imageData = data
+    }
+    
+    func numberOfItems() -> Int {
+        recipes?.count ?? 0
     }
 }

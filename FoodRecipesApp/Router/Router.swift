@@ -17,7 +17,7 @@ protocol Router: RouterMain {
 }
 
 class RouterImplementation: Router {
-    var navigationController: UINavigationController?
+    weak var navigationController: UINavigationController?
     var assemblyBuilder: AssemblyBuilder?
     
     init(navigationController: UINavigationController, assemblyBuilder: AssemblyBuilder) {

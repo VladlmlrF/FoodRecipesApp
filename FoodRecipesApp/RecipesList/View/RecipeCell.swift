@@ -11,8 +11,8 @@ class RecipeCell: UICollectionViewCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        //label.textAlignment = .left
         label.font = .boldSystemFont(ofSize: 17)
+        label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -20,7 +20,6 @@ class RecipeCell: UICollectionViewCell {
     let ingredientsCountLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
-        //label.textAlignment = .center
         label.font = .systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -41,7 +40,9 @@ class RecipeCell: UICollectionViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(ingredientsCountLabel)
         contentView.addSubview(imageView)
-        setConstraints()
+        DispatchQueue.main.async { [weak self] in
+            self?.setConstraints()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -61,7 +62,7 @@ class RecipeCell: UICollectionViewCell {
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -45)
+            imageView.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: -5)
         ])
     }
 }
