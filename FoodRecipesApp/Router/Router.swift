@@ -14,6 +14,7 @@ protocol RouterMain {
 
 protocol Router: RouterMain {
     func initialViewController()
+    func showDetail(recipe: Recipe?)
 }
 
 class RouterImplementation: Router {
@@ -30,5 +31,10 @@ class RouterImplementation: Router {
             guard let recipesListVC = assemblyBuilder?.createRecipesList(router: self) else { return }
             navigationController.viewControllers = [recipesListVC]
         }
+    }
+    
+    func showDetail(recipe: Recipe?) {
+        guard let recipeDetailVC = assemblyBuilder?.createRecipeDetail(recipe: recipe, router: self) else { return }
+        navigationController?.pushViewController(recipeDetailVC, animated: true)
     }
 }
