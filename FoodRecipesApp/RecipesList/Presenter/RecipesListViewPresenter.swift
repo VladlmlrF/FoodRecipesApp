@@ -16,22 +16,25 @@ protocol RecipesListInput: AnyObject {
 protocol RecipesListOutput: AnyObject {
     var recipes: [Recipe]? { get set }
     var imageData: [Data]? { get set }
-    init(view: RecipesListInput, networkManager: NetworkManager)
+    init(view: RecipesListInput, networkManager: NetworkManager, router: Router)
     func fetchRecipes()
     func fetchImageData(recipes: [Recipe])
     func numberOfItems() -> Int
+    func tapOnRecipe(recipe: Recipe?)
 }
 
 //MARK: - RecipesListViewPresenter
 class RecipesListViewPresenter: RecipesListOutput {
     var imageData: [Data]?
     weak var view: RecipesListInput!
-    var networkManager: NetworkManager!
+    let networkManager: NetworkManager!
+    let router: Router!
     var recipes: [Recipe]?
     
-    required init(view: RecipesListInput, networkManager: NetworkManager) {
+    required init(view: RecipesListInput, networkManager: NetworkManager, router: Router) {
         self.view = view
         self.networkManager = networkManager
+        self.router = router
         fetchRecipes()
     }
     
@@ -65,5 +68,9 @@ class RecipesListViewPresenter: RecipesListOutput {
     
     func numberOfItems() -> Int {
         recipes?.count ?? 0
+    }
+    
+    func tapOnRecipe(recipe: Recipe?) {
+        router.showDetail(recipe: recipe)
     }
 }

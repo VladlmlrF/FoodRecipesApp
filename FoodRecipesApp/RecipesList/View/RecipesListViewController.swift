@@ -64,7 +64,8 @@ class RecipesListViewController: UIViewController {
 //MARK: - UICollectionViewDelegate
 extension RecipesListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let recipe = presenter?.recipes?[indexPath.item]
+        presenter.tapOnRecipe(recipe: recipe)
     }
 }
 

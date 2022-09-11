@@ -19,6 +19,8 @@
 		1AD557A728CC793100A5444F /* RecipesListViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557A628CC793100A5444F /* RecipesListViewPresenter.swift */; };
 		1AD557AA28CCB33B00A5444F /* AssemblyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557A928CCB33B00A5444F /* AssemblyBuilder.swift */; };
 		1AD557AD28CCB35F00A5444F /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557AC28CCB35F00A5444F /* Router.swift */; };
+		1AD557B228CE1B1800A5444F /* RecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557B128CE1B1800A5444F /* RecipeDetailViewController.swift */; };
+		1AD557B428CE1B3900A5444F /* RecipeDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557B328CE1B3900A5444F /* RecipeDetailPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		1AD557A628CC793100A5444F /* RecipesListViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListViewPresenter.swift; sourceTree = "<group>"; };
 		1AD557A928CCB33B00A5444F /* AssemblyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyBuilder.swift; sourceTree = "<group>"; };
 		1AD557AC28CCB35F00A5444F /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		1AD557B128CE1B1800A5444F /* RecipeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewController.swift; sourceTree = "<group>"; };
+		1AD557B328CE1B3900A5444F /* RecipeDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,7 @@
 				1AD557A828CCB31900A5444F /* Builder */,
 				1AD5579628CBA24F00A5444F /* App */,
 				1AD5579A28CBA2E400A5444F /* RecipesList */,
+				1AD557AE28CE1AA600A5444F /* RecipeDetail */,
 				1AD5579928CBA2AC00A5444F /* Models */,
 				1AD5579F28CBBDD200A5444F /* Services */,
 				1AD5579728CBA27200A5444F /* Storyboards */,
@@ -118,8 +123,8 @@
 		1AD5579A28CBA2E400A5444F /* RecipesList */ = {
 			isa = PBXGroup;
 			children = (
-				1AD5579C28CBA2F900A5444F /* Presenter */,
 				1AD5579B28CBA2EE00A5444F /* View */,
+				1AD5579C28CBA2F900A5444F /* Presenter */,
 			);
 			path = RecipesList;
 			sourceTree = "<group>";
@@ -163,6 +168,31 @@
 				1AD557AC28CCB35F00A5444F /* Router.swift */,
 			);
 			path = Router;
+			sourceTree = "<group>";
+		};
+		1AD557AE28CE1AA600A5444F /* RecipeDetail */ = {
+			isa = PBXGroup;
+			children = (
+				1AD557B028CE1AD700A5444F /* View */,
+				1AD557AF28CE1ACA00A5444F /* Presenter */,
+			);
+			path = RecipeDetail;
+			sourceTree = "<group>";
+		};
+		1AD557AF28CE1ACA00A5444F /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				1AD557B328CE1B3900A5444F /* RecipeDetailPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		1AD557B028CE1AD700A5444F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1AD557B128CE1B1800A5444F /* RecipeDetailViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,8 +270,10 @@
 				1AD557AD28CCB35F00A5444F /* Router.swift in Sources */,
 				1AD5577E28CBA01800A5444F /* AppDelegate.swift in Sources */,
 				1AD557AA28CCB33B00A5444F /* AssemblyBuilder.swift in Sources */,
+				1AD557B428CE1B3900A5444F /* RecipeDetailPresenter.swift in Sources */,
 				1AD557A728CC793100A5444F /* RecipesListViewPresenter.swift in Sources */,
 				1AD557A528CC775E00A5444F /* RecipeCell.swift in Sources */,
+				1AD557B228CE1B1800A5444F /* RecipeDetailViewController.swift in Sources */,
 				1AD5578028CBA01800A5444F /* SceneDelegate.swift in Sources */,
 				1AD5578828CBA01800A5444F /* FoodRecipesApp.xcdatamodeld in Sources */,
 				1AD5579E28CBB5BB00A5444F /* FoodRecipes.swift in Sources */,
