@@ -21,6 +21,8 @@
 		1AD557AD28CCB35F00A5444F /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557AC28CCB35F00A5444F /* Router.swift */; };
 		1AD557B228CE1B1800A5444F /* RecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557B128CE1B1800A5444F /* RecipeDetailViewController.swift */; };
 		1AD557B428CE1B3900A5444F /* RecipeDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557B328CE1B3900A5444F /* RecipeDetailPresenter.swift */; };
+		1AD557B628CE3BA900A5444F /* RecipeDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557B528CE3BA900A5444F /* RecipeDetailHeaderView.swift */; };
+		1AD557B828CE53D000A5444F /* RecipeDetailFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557B728CE53D000A5444F /* RecipeDetailFooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		1AD557AC28CCB35F00A5444F /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		1AD557B128CE1B1800A5444F /* RecipeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewController.swift; sourceTree = "<group>"; };
 		1AD557B328CE1B3900A5444F /* RecipeDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailPresenter.swift; sourceTree = "<group>"; };
+		1AD557B528CE3BA900A5444F /* RecipeDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailHeaderView.swift; sourceTree = "<group>"; };
+		1AD557B728CE53D000A5444F /* RecipeDetailFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailFooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				1AD557B128CE1B1800A5444F /* RecipeDetailViewController.swift */,
+				1AD557B528CE3BA900A5444F /* RecipeDetailHeaderView.swift */,
+				1AD557B728CE53D000A5444F /* RecipeDetailFooterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -271,10 +277,12 @@
 				1AD5577E28CBA01800A5444F /* AppDelegate.swift in Sources */,
 				1AD557AA28CCB33B00A5444F /* AssemblyBuilder.swift in Sources */,
 				1AD557B428CE1B3900A5444F /* RecipeDetailPresenter.swift in Sources */,
+				1AD557B828CE53D000A5444F /* RecipeDetailFooterView.swift in Sources */,
 				1AD557A728CC793100A5444F /* RecipesListViewPresenter.swift in Sources */,
 				1AD557A528CC775E00A5444F /* RecipeCell.swift in Sources */,
 				1AD557B228CE1B1800A5444F /* RecipeDetailViewController.swift in Sources */,
 				1AD5578028CBA01800A5444F /* SceneDelegate.swift in Sources */,
+				1AD557B628CE3BA900A5444F /* RecipeDetailHeaderView.swift in Sources */,
 				1AD5578828CBA01800A5444F /* FoodRecipesApp.xcdatamodeld in Sources */,
 				1AD5579E28CBB5BB00A5444F /* FoodRecipes.swift in Sources */,
 			);

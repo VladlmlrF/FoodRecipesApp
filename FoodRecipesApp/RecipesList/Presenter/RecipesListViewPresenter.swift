@@ -42,9 +42,12 @@ class RecipesListViewPresenter: RecipesListOutput {
         networkManager.fetchData { [weak self] result in
             switch result {
             case .success(let foodRecipes):
-                self?.recipes = foodRecipes.recipes
-                self?.fetchImageData(recipes: foodRecipes.recipes)
-                self?.view.getRecipes()
+                DispatchQueue.main.async {
+                    self?.recipes = foodRecipes.recipes
+                    self?.fetchImageData(recipes: foodRecipes.recipes)
+                    self?.view.getRecipes()
+                }
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
