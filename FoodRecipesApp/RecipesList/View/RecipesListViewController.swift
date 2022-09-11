@@ -79,11 +79,8 @@ extension RecipesListViewController: UICollectionViewDataSource {
         let recipe = presenter.recipes?[indexPath.item]
         cell.nameLabel.text = recipe?.title
         cell.ingredientsCountLabel.text = "\(recipe?.extendedIngredients.count ?? 0) ingredients"
-        guard presenter.recipes?.count == presenter.imageData?.count else { return UICollectionViewCell() }
-        if let imageData = presenter.imageData?[indexPath.item] {
-            DispatchQueue.main.async {
-                cell.imageView.image = UIImage(data: imageData)
-            }
+        if let imageData = presenter.imageData {
+            cell.imageView.image = imageData.indices.contains(indexPath.item) ? UIImage(data: imageData[indexPath.item]) : UIImage(named: "noImage")
         }
         
         return cell
