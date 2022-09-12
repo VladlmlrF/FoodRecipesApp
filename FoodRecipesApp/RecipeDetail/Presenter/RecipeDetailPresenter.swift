@@ -7,17 +7,21 @@
 
 import Foundation
 
+//MARK: - RecipeDetail input protocol
 protocol RecipeDetailInput: AnyObject {
     func setRecipe()
 }
 
+//MARK: - RecipeDetail output protocol
 protocol RecipeDetailOutput: AnyObject {
     var recipe: Recipe? { get set }
     var imageData: Data? { get set }
     init(view: RecipeDetailInput, networkManager: NetworkManager, router: Router, recipe: Recipe?)
     func fetchImageData()
+    func showInstructions(recipe: Recipe?)
 }
 
+//MARK: - RecipeDetailPresenter
 class RecipeDetailPresenter: RecipeDetailOutput {
     weak var view: RecipeDetailInput!
     let networkManager: NetworkManager!
@@ -45,5 +49,9 @@ class RecipeDetailPresenter: RecipeDetailOutput {
                 }
             }
         }
+    }
+    
+    func showInstructions(recipe: Recipe?) {
+        router.showInstructions(recipe: recipe)
     }
 }

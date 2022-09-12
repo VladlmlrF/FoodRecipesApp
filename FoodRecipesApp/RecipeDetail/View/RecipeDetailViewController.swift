@@ -21,6 +21,7 @@ class RecipeDetailViewController: UIViewController {
         return tableview
     }()
     
+    //MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,6 +33,7 @@ class RecipeDetailViewController: UIViewController {
         setConstraints()
     }
     
+    //MARK: - private methods
     private func setConstraints() {
         NSLayoutConstraint.activate([
             tableview.topAnchor.constraint(equalTo: view.topAnchor),
@@ -40,8 +42,14 @@ class RecipeDetailViewController: UIViewController {
             tableview.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    @objc private func toInstructions() {
+        guard let recipe = presenter.recipe else { return }
+        presenter.showInstructions(recipe: recipe)
+    }
 }
 
+//MARK: - UITableViewDataSource
 extension RecipeDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter.recipe?.extendedIngredients.count ?? 0
@@ -56,6 +64,7 @@ extension RecipeDetailViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension RecipeDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableview.deselectRow(at: indexPath, animated: true)
@@ -71,6 +80,7 @@ extension RecipeDetailViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = RecipeDetailFooterView()
+        footerView.instructionsButton.addTarget(self, action: #selector(toInstructions), for: .touchUpInside)
         return footerView
     }
 
@@ -83,6 +93,7 @@ extension RecipeDetailViewController: UITableViewDelegate {
     }
 }
 
+//MARK: - RecipeDetailInput
 extension RecipeDetailViewController: RecipeDetailInput {
     func setRecipe() {
         tableview.reloadData()
