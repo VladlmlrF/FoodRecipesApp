@@ -83,9 +83,7 @@
 				1AD557AB28CCB34D00A5444F /* Router */,
 				1AD557A828CCB31900A5444F /* Builder */,
 				1AD5579628CBA24F00A5444F /* App */,
-				1AD5579A28CBA2E400A5444F /* RecipesList */,
-				1AD557AE28CE1AA600A5444F /* RecipeDetail */,
-				1AD557B928CF6BD100A5444F /* Instructions */,
+				1AD557C328D0BAEA00A5444F /* RandomRecipes */,
 				1AD5579928CBA2AC00A5444F /* Models */,
 				1AD5579F28CBBDD200A5444F /* Services */,
 				1AD5579728CBA27200A5444F /* Storyboards */,
@@ -229,6 +227,16 @@
 				1AD557BE28CF6C3200A5444F /* InstructionsPresenter.swift */,
 			);
 			path = Presenter;
+			sourceTree = "<group>";
+		};
+		1AD557C328D0BAEA00A5444F /* RandomRecipes */ = {
+			isa = PBXGroup;
+			children = (
+				1AD5579A28CBA2E400A5444F /* RecipesList */,
+				1AD557AE28CE1AA600A5444F /* RecipeDetail */,
+				1AD557B928CF6BD100A5444F /* Instructions */,
+			);
+			path = RandomRecipes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
