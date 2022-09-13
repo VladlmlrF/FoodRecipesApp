@@ -11,6 +11,7 @@ class RecipesListViewController: UIViewController {
 
     var presenter: RecipesListOutput!
     private let cellIdentifier = "recipeCell"
+    private let tabBarIt = UITabBarItem(title: "Food Recipes", image: UIImage(systemName: "note.text"), tag: 0)
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -31,6 +32,7 @@ class RecipesListViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
+        tabBarItem = tabBarIt
         setupNavigationBar()
         collectionView.dataSource = self
         collectionView.delegate = self

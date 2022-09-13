@@ -15,11 +15,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let navigationController = UINavigationController()
+        let randomRecipeListNavController = UINavigationController()
         let assemblyBuilder = AssemblyBuilderImplementation()
-        let router = RouterImplementation(navigationController: navigationController, assemblyBuilder: assemblyBuilder)
+        let router = RouterImplementation(navigationController: randomRecipeListNavController, assemblyBuilder: assemblyBuilder)
         router.initialViewController()
-        window?.rootViewController = navigationController
+        let mainTabBarController = UITabBarController()
+        //window?.rootViewController = navigationController
+        mainTabBarController.tabBar.tintColor = .red
+        mainTabBarController.setViewControllers([randomRecipeListNavController], animated: true)
+        window?.rootViewController = mainTabBarController
         window?.makeKeyAndVisible()
     }
 
