@@ -34,12 +34,20 @@ class RecipeCell: UICollectionViewCell {
         return imageView
     }()
     
+    let favoriteButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "unselectedHeart"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         contentView.backgroundColor = .white
         contentView.addSubview(nameLabel)
         contentView.addSubview(ingredientsCountLabel)
         contentView.addSubview(imageView)
+        imageView.addSubview(favoriteButton)
         DispatchQueue.main.async { [weak self] in
             self?.setConstraints()
         }
@@ -62,7 +70,10 @@ class RecipeCell: UICollectionViewCell {
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: -5)
+            imageView.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: -5),
+            
+            favoriteButton.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 20),
+            favoriteButton.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -20)
         ])
     }
 }
