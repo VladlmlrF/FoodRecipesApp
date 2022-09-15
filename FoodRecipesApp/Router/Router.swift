@@ -14,6 +14,7 @@ protocol RouterMain {
 
 protocol Router: RouterMain {
     func initialViewController()
+    func showFavoriteRecipeList()
     func showDetail(recipe: Recipe?)
     func showInstructions(recipe: Recipe?)
 }
@@ -31,6 +32,13 @@ class RouterImplementation: Router {
         if let navigationController = navigationController {
             guard let recipesListVC = assemblyBuilder?.createRecipesList(router: self) else { return }
             navigationController.viewControllers = [recipesListVC]
+        }
+    }
+    
+    func showFavoriteRecipeList() {
+        if let navigationController = navigationController {
+            guard let favoriteListVC = assemblyBuilder?.createFavoriteList(router: self) else { return }
+            navigationController.viewControllers = [favoriteListVC]
         }
     }
     

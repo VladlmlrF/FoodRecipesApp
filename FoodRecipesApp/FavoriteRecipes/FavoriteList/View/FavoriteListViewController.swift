@@ -1,17 +1,17 @@
 //
-//  RecipesListViewController.swift
+//  FavoriteListViewController.swift
 //  FoodRecipesApp
 //
-//  Created by Владимир Фалин on 09.09.2022.
+//  Created by Владимир Фалин on 15.09.2022.
 //
 
 import UIKit
 
-class RecipesListViewController: UIViewController {
+class FavoriteListViewController: UIViewController {
 
-    var presenter: RecipesListOutput!
+    var presenter: FavoriteListViewPresenter!
     private let cellIdentifier = "recipeCell"
-    private let tabBarIt = UITabBarItem(title: "Food Recipes", image: UIImage(systemName: "note.text"), tag: 0)
+    private let tabBarIt = UITabBarItem(title: "Favorite Recipes", image: UIImage(systemName: "heart"), tag: 1)
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -42,7 +42,7 @@ class RecipesListViewController: UIViewController {
     
     //MARK: - private methods
     private func setupNavigationBar() {
-        title = "Food Recipes"
+        title = "Favorite Recipes"
         navigationController?.navigationBar.prefersLargeTitles = true
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
@@ -61,15 +61,10 @@ class RecipesListViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
-    @objc private func toggleFavorite() {
-        //StorageManagerImplementation.shared.save(title: "Hello", instruction: "instructin #1")
-        print("hello")
-    }
 }
 
 //MARK: - UICollectionViewDelegate
-extension RecipesListViewController: UICollectionViewDelegate {
+extension FavoriteListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let recipe = presenter?.recipes?[indexPath.item]
         presenter.tapOnRecipe(recipe: recipe)
@@ -77,7 +72,7 @@ extension RecipesListViewController: UICollectionViewDelegate {
 }
 
 //MARK: - UICollectionViewDataSource
-extension RecipesListViewController: UICollectionViewDataSource {
+extension FavoriteListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         presenter?.numberOfItems() ?? 0
     }
@@ -87,7 +82,6 @@ extension RecipesListViewController: UICollectionViewDataSource {
         let recipe = presenter.recipes?[indexPath.item]
         cell.nameLabel.text = recipe?.title
         cell.ingredientsCountLabel.text = "\(recipe?.extendedIngredients.count ?? 0) ingredients"
-        cell.favoriteButton.addTarget(self, action: #selector(toggleFavorite), for: .touchUpInside)
         if let imageData = presenter.imageData {
             cell.imageView.image = imageData.indices.contains(indexPath.item) ? UIImage(data: imageData[indexPath.item]) : UIImage(named: "noImage")
         }
@@ -97,7 +91,7 @@ extension RecipesListViewController: UICollectionViewDataSource {
 }
 
 //MARK: - RecipesListInput
-extension RecipesListViewController: RecipesListInput {
+extension FavoriteListViewController: FavoriteListInput {
     func getRecipes() {
         collectionView.reloadData()
     }

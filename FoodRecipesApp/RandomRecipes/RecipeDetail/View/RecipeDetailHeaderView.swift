@@ -27,7 +27,7 @@ class RecipeDetailHeaderView: UIView {
     }()
     
     let favoriteButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .roundedRect)
         button.setImage(UIImage(named: "unselectedHeart"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

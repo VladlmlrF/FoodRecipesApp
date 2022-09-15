@@ -2,17 +2,16 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Food" representedClassName="Food" syncable="YES">
         <attribute name="imageData" optional="YES" attributeType="Binary"/>
-        <attribute name="ingredient" optional="YES" attributeType="String"/>
         <attribute name="instruction" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Ingredient" inverseName="food" inverseEntity="Ingredient"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="FoodIngredient" inverseName="food" inverseEntity="FoodIngredient"/>
     </entity>
-    <entity name="Ingredient" representedClassName="Ingredient" syncable="YES">
+    <entity name="FoodIngredient" representedClassName="FoodIngredient" syncable="YES">
         <attribute name="ingredient" optional="YES" attributeType="String"/>
         <relationship name="food" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Food" inverseName="ingredients" inverseEntity="Food"/>
     </entity>
     <elements>
-        <element name="Food" positionX="-276.8671875" positionY="95.015625" width="128" height="118"/>
-        <element name="Ingredient" positionX="-53.515625" positionY="250.18359375" width="128" height="73"/>
+        <element name="Food" positionX="-276.8671875" positionY="95.015625" width="128" height="103"/>
+        <element name="FoodIngredient" positionX="-53.515625" positionY="250.18359375" width="128" height="73"/>
     </elements>
 </model>
