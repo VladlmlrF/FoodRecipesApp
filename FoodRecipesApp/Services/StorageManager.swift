@@ -10,28 +10,39 @@ import RealmSwift
 
 
 protocol StorageManager: AnyObject {
-    
+    func save(title: String, instruction: String, imageUrlString: String, recipe: Recipe)
+    func delete(_ food: SavedRecipe)
+    var realm: Realm? { get }
 }
 
 class StorageManagerImplementation: StorageManager {
     
-    static let shared = StorageManagerImplementation()
+//    static let shared = StorageManagerImplementation()
+//
+//    private init() {}
     
-    private init() {}
+    var realm = try? Realm()
     
-    let realm = try? Realm()
-    
-    func save(title: String, instruction: String, data: Data) {
+    func save(title: String, instruction: String, imageUrlString: String, recipe: Recipe) {
         write {
-            let food = Food()
+            let food = SavedRecipe()
             food.title = title
             food.instruction = instruction
+            food.imageUrlString = imageUrlString
+            
+            for index in 0..<recipe.extendedIngredients.count {
+                let foodIngredient = FoodIngredient()
+                foodIngredient.ingredient = recipe.extendedIngredients[index].original
+                food.ingredients.append(foodIngredient)
+            }
+            
             realm?.add(food)
         }
     }
     
-    func delete(_ food: Food) {
+    func delete(_ food: SavedRecipe) {
         write {
+            realm?.delete(food.ingredients)
             realm?.delete(food)
         }
     }

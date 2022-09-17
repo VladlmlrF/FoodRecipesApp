@@ -8,9 +8,13 @@
 import Foundation
 import RealmSwift
 
-class Food: Object {
+class SavedRecipe: Object {
     @Persisted var title = ""
     @Persisted var instruction = ""
-    @Persisted var ingredients = List<String>()
-    @Persisted var imageData = Data()
+    @Persisted var ingredients = List<FoodIngredient>()
+    @Persisted var imageUrlString = ""
+}
+
+class FoodIngredient: Object {
+    @Persisted var ingredient = ""
 }

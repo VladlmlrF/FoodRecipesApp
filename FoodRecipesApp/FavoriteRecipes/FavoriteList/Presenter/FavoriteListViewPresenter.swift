@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 //MARK: - FavoriteList input protocol
 protocol FavoriteListInput: AnyObject {
@@ -14,40 +15,54 @@ protocol FavoriteListInput: AnyObject {
 
 //MARK: - FavoriteList output protocol
 protocol FavoriteListOutput: AnyObject {
-    var recipes: [Recipe]? { get set }
-    var imageData: [Data]? { get set }
-    init(view: FavoriteListInput, storageManager: StorageManager, router: Router)
+    var savedRecipeList: Results<SavedRecipe>? { get set }
+    init(view: FavoriteListInput, storageManager: StorageManager, networkManager: NetworkManager, router: Router)
     func fetchRecipes()
-    func fetchImageData(recipes: [Recipe])
     func numberOfItems() -> Int
     func tapOnRecipe(recipe: Recipe?)
+    func fetchImage(savedRecipe: SavedRecipe, completion: @escaping(Data) -> ())
 }
 
 //MARK: - FavoriteListViewPresenter
 class FavoriteListViewPresenter: FavoriteListOutput {
-    var imageData: [Data]?
+    var savedRecipeList: Results<SavedRecipe>?
     weak var view: FavoriteListInput!
     let storageManager: StorageManager!
+    let networkManager: NetworkManager!
     let router: Router!
-    var recipes: [Recipe]?
     
-    required init(view: FavoriteListInput, storageManager: StorageManager, router: Router) {
+    required init(view: FavoriteListInput, storageManager: StorageManager, networkManager: NetworkManager, router: Router) {
         self.view = view
         self.storageManager = storageManager
+        self.networkManager = networkManager
         self.router = router
         fetchRecipes()
     }
     
     func fetchRecipes() {
-        
+        savedRecipeList = storageManager.realm?.objects(SavedRecipe.self)
+        view.getRecipes()
     }
     
-    func fetchImageData(recipes: [Recipe]) {
-        
+    func fetchImage(savedRecipe: SavedRecipe, completion: @escaping(Data) -> ()) {
+        networkManager.fetchImageData(urlString: savedRecipe.imageUrlString) { result in
+            switch result {
+            case .success(let data):
+                DispatchQueue.main.async {
+                    completion(data)
+                }
+            case .failure(let error):
+                print( error.localizedDescription)
+            }
+        }
     }
     
     func numberOfItems() -> Int {
-        recipes?.count ?? 0
+        var numberOfItems = 0
+        if let savedRecipeList = savedRecipeList, !savedRecipeList.isEmpty {
+            numberOfItems = savedRecipeList.count
+        }
+        return numberOfItems
     }
     
     func tapOnRecipe(recipe: Recipe?) {

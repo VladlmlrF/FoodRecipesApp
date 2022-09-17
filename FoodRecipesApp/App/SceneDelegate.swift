@@ -23,10 +23,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let routerFavorite = RouterImplementation(navigationController: favoriteListNavController, assemblyBuilder: assemblyBuilder)
         routerFavorite.showFavoriteRecipeList()
         let mainTabBarController = UITabBarController()
-        //window?.rootViewController = navigationController
         mainTabBarController.tabBar.tintColor = .red
         mainTabBarController.setViewControllers([randomRecipeListNavController, favoriteListNavController], animated: true)
         window?.rootViewController = mainTabBarController
+        randomRecipeListNavController.tabBarItem = UITabBarItem(title: "Food Recipes", image: UIImage(systemName: "note.text"), tag: 0)
+        favoriteListNavController.tabBarItem = UITabBarItem(title: "Favorite Recipes", image: UIImage(systemName: "heart"), tag: 1)
         window?.makeKeyAndVisible()
     }
 

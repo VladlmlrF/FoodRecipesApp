@@ -26,20 +26,12 @@ class RecipeDetailHeaderView: UIView {
         return label
     }()
     
-    let favoriteButton: UIButton = {
-        let button = UIButton(type: .roundedRect)
-        button.setImage(UIImage(named: "unselectedHeart"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         backgroundColor = .white
         addSubview(foodImageView)
         addSubview(ingredientsLabel)
-        foodImageView.addSubview(favoriteButton)
         setConstraints()
     }
     
@@ -56,10 +48,7 @@ class RecipeDetailHeaderView: UIView {
             
             ingredientsLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             ingredientsLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            ingredientsLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5),
-            
-            favoriteButton.topAnchor.constraint(equalTo: foodImageView.topAnchor, constant: 20),
-            favoriteButton.trailingAnchor.constraint(equalTo: foodImageView.trailingAnchor, constant: -20)
+            ingredientsLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
         ])
     }
     

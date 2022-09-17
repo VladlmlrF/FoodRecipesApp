@@ -6,12 +6,12 @@
 //
 
 import UIKit
+//import RealmSwift
 
 class FavoriteListViewController: UIViewController {
-
+    
     var presenter: FavoriteListViewPresenter!
-    private let cellIdentifier = "recipeCell"
-    private let tabBarIt = UITabBarItem(title: "Favorite Recipes", image: UIImage(systemName: "heart"), tag: 1)
+    private let cellIdentifier = "savedRecipeCell"
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -21,7 +21,7 @@ class FavoriteListViewController: UIViewController {
         layout.minimumInteritemSpacing = 0
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.register(RecipeCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        collection.register(SavedRecipeCell.self, forCellWithReuseIdentifier: cellIdentifier)
         collection.backgroundColor = .white
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
@@ -32,12 +32,16 @@ class FavoriteListViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-        tabBarItem = tabBarIt
         setupNavigationBar()
         collectionView.dataSource = self
         collectionView.delegate = self
         view.addSubview(collectionView)
         setConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
     }
     
     //MARK: - private methods
@@ -66,8 +70,8 @@ class FavoriteListViewController: UIViewController {
 //MARK: - UICollectionViewDelegate
 extension FavoriteListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let recipe = presenter?.recipes?[indexPath.item]
-        presenter.tapOnRecipe(recipe: recipe)
+//        let recipe = presenter?.recipes?[indexPath.item]
+//        presenter.tapOnRecipe(recipe: recipe)
     }
 }
 
@@ -78,14 +82,13 @@ extension FavoriteListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? RecipeCell else { return UICollectionViewCell() }
-        let recipe = presenter.recipes?[indexPath.item]
-        cell.nameLabel.text = recipe?.title
-        cell.ingredientsCountLabel.text = "\(recipe?.extendedIngredients.count ?? 0) ingredients"
-        if let imageData = presenter.imageData {
-            cell.imageView.image = imageData.indices.contains(indexPath.item) ? UIImage(data: imageData[indexPath.item]) : UIImage(named: "noImage")
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? SavedRecipeCell else { return UICollectionViewCell() }
+        guard let savedRecipeList = presenter.savedRecipeList else { return UICollectionViewCell() }
+        let savedRecipe = savedRecipeList[indexPath.item]
+        cell.nameLabel.text = savedRecipe.title
+        presenter.fetchImage(savedRecipe: savedRecipe) { data in
+            cell.imageView.image = UIImage(data: data)
         }
-        
         return cell
     }
 }

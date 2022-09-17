@@ -15,7 +15,7 @@ enum NetworkError: Error {
 
 protocol NetworkManager: AnyObject {
     func fetchData(_ completion: @escaping(Result<FoodRecipes, NetworkError>) -> ())
-    func fetchImageData(recipe: Recipe, _ completion: @escaping(Result<Data, NetworkError>) -> ())
+    func fetchImageData(urlString: String, _ completion: @escaping(Result<Data, NetworkError>) -> ())
 }
 
 class NetworkManagerImplementation: NetworkManager {
@@ -33,9 +33,6 @@ class NetworkManagerImplementation: NetworkManager {
             
             do {
                 let foodRecipes = try JSONDecoder().decode(FoodRecipes.self, from: data)
-//                DispatchQueue.main.async {
-//                    completion(.success(foodRecipes))
-//                }
                 completion(.success(foodRecipes))
             } catch {
                 completion(.failure(.decodingError))
@@ -43,9 +40,9 @@ class NetworkManagerImplementation: NetworkManager {
         }.resume()
     }
     
-    func fetchImageData(recipe: Recipe, _ completion: @escaping(Result<Data, NetworkError>) -> ()) {
-        guard let url = URL(string: recipe.image ?? "") else {
-            //completion(.failure(.invalidURL))
+    func fetchImageData(urlString: String, _ completion: @escaping(Result<Data, NetworkError>) -> ()) {
+        guard let url = URL(string: urlString) else {
+            completion(.failure(.invalidURL))
             return
         }
         do {

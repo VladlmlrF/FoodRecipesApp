@@ -26,7 +26,8 @@ class AssemblyBuilderImplementation: AssemblyBuilder {
     func createRecipeDetail(recipe: Recipe?, router: Router) -> UIViewController {
         let view = RecipeDetailViewController()
         let networkManager = NetworkManagerImplementation()
-        let presenter = RecipeDetailPresenter(view: view, networkManager: networkManager, router: router, recipe: recipe)
+        let storageManager = StorageManagerImplementation()
+        let presenter = RecipeDetailPresenter(view: view, networkManager: networkManager, storageManager: storageManager, router: router, recipe: recipe)
         view.presenter = presenter
         return view
     }
@@ -41,8 +42,9 @@ class AssemblyBuilderImplementation: AssemblyBuilder {
     
     func createFavoriteList(router: Router) -> UIViewController {
         let view = FavoriteListViewController()
-        let storageManager = StorageManagerImplementation.shared
-        let presenter = FavoriteListViewPresenter(view: view, storageManager: storageManager, router: router)
+        let storageManager = StorageManagerImplementation()
+        let networkManager = NetworkManagerImplementation()
+        let presenter = FavoriteListViewPresenter(view: view, storageManager: storageManager, networkManager: networkManager, router: router)
         view.presenter = presenter
         return view
     }

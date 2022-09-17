@@ -1,13 +1,13 @@
 //
-//  RecipeCell.swift
+//  SavedRecipeCell.swift
 //  FoodRecipesApp
 //
-//  Created by Владимир Фалин on 10.09.2022.
+//  Created by Владимир Фалин on 16.09.2022.
 //
 
 import UIKit
 
-class RecipeCell: UICollectionViewCell {
+class SavedRecipeCell: UICollectionViewCell {
     let nameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
@@ -40,7 +40,9 @@ class RecipeCell: UICollectionViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(ingredientsCountLabel)
         contentView.addSubview(imageView)
-        setConstraints()
+        DispatchQueue.main.async { [weak self] in
+            self?.setConstraints()
+        }
     }
     
     required init?(coder: NSCoder) {

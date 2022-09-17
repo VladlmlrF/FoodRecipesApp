@@ -11,7 +11,6 @@ class RecipesListViewController: UIViewController {
 
     var presenter: RecipesListOutput!
     private let cellIdentifier = "recipeCell"
-    private let tabBarIt = UITabBarItem(title: "Food Recipes", image: UIImage(systemName: "note.text"), tag: 0)
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -27,17 +26,25 @@ class RecipesListViewController: UIViewController {
         return collection
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView(style: .large)
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.hidesWhenStopped = true
+        return activity
+    }()
+    
     //MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-        tabBarItem = tabBarIt
         setupNavigationBar()
         collectionView.dataSource = self
         collectionView.delegate = self
         view.addSubview(collectionView)
+        view.addSubview(activityIndicator)
         setConstraints()
+        activityIndicator.startAnimating()
     }
     
     //MARK: - private methods
@@ -58,13 +65,11 @@ class RecipesListViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-    }
-    
-    @objc private func toggleFavorite() {
-        //StorageManagerImplementation.shared.save(title: "Hello", instruction: "instructin #1")
-        print("hello")
     }
 }
 
@@ -87,7 +92,6 @@ extension RecipesListViewController: UICollectionViewDataSource {
         let recipe = presenter.recipes?[indexPath.item]
         cell.nameLabel.text = recipe?.title
         cell.ingredientsCountLabel.text = "\(recipe?.extendedIngredients.count ?? 0) ingredients"
-        cell.favoriteButton.addTarget(self, action: #selector(toggleFavorite), for: .touchUpInside)
         if let imageData = presenter.imageData {
             cell.imageView.image = imageData.indices.contains(indexPath.item) ? UIImage(data: imageData[indexPath.item]) : UIImage(named: "noImage")
         }
@@ -99,6 +103,7 @@ extension RecipesListViewController: UICollectionViewDataSource {
 //MARK: - RecipesListInput
 extension RecipesListViewController: RecipesListInput {
     func getRecipes() {
+        activityIndicator.stopAnimating()
         collectionView.reloadData()
     }
 }
