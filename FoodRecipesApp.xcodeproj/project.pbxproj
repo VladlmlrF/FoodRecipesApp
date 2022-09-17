@@ -31,6 +31,7 @@
 		1AD557E428D38CA000A5444F /* SavedRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557E328D38CA000A5444F /* SavedRecipe.swift */; };
 		1AD557E628D38DA700A5444F /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557E528D38DA700A5444F /* StorageManager.swift */; };
 		1AD557E828D4CEEF00A5444F /* SavedRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557E728D4CEEF00A5444F /* SavedRecipeCell.swift */; };
+		1AD557EE28D63B1700A5444F /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557ED28D63B1700A5444F /* ImageCacheManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		1AD557E328D38CA000A5444F /* SavedRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedRecipe.swift; sourceTree = "<group>"; };
 		1AD557E528D38DA700A5444F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		1AD557E728D4CEEF00A5444F /* SavedRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedRecipeCell.swift; sourceTree = "<group>"; };
+		1AD557ED28D63B1700A5444F /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 			children = (
 				1AD557A028CBBDEA00A5444F /* NetworkManager.swift */,
 				1AD557E528D38DA700A5444F /* StorageManager.swift */,
+				1AD557ED28D63B1700A5444F /* ImageCacheManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				1AD557BF28CF6C3200A5444F /* InstructionsPresenter.swift in Sources */,
 				1AD5577E28CBA01800A5444F /* AppDelegate.swift in Sources */,
 				1AD557E828D4CEEF00A5444F /* SavedRecipeCell.swift in Sources */,
+				1AD557EE28D63B1700A5444F /* ImageCacheManager.swift in Sources */,
 				1AD557E628D38DA700A5444F /* StorageManager.swift in Sources */,
 				1AD557AA28CCB33B00A5444F /* AssemblyBuilder.swift in Sources */,
 				1AD557E428D38CA000A5444F /* SavedRecipe.swift in Sources */,

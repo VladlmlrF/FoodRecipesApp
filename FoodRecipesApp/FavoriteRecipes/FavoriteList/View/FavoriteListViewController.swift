@@ -86,8 +86,15 @@ extension FavoriteListViewController: UICollectionViewDataSource {
         guard let savedRecipeList = presenter.savedRecipeList else { return UICollectionViewCell() }
         let savedRecipe = savedRecipeList[indexPath.item]
         cell.nameLabel.text = savedRecipe.title
-        presenter.fetchImage(savedRecipe: savedRecipe) { data in
-            cell.imageView.image = UIImage(data: data)
+        if let cachedImage = ImageCacheManager.shared.object(forKey: savedRecipe.title as NSString) {
+            cell.imageView.image = cachedImage
+        } else {
+            presenter.fetchImage(savedRecipe: savedRecipe) { data in
+                cell.imageView.image = UIImage(data: data)
+                if let image = UIImage(data: data) {
+                    ImageCacheManager.shared.setObject(image, forKey: savedRecipe.title as NSString)
+                }
+            }
         }
         return cell
     }
