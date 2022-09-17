@@ -57,7 +57,7 @@ class RecipesListViewPresenter: RecipesListOutput {
     func fetchImageData(recipes: [Recipe]) {
         var data: [Data] = []
         for recipe in recipes {
-            networkManager.fetchImageData(recipe: recipe) { result in
+            networkManager.fetchImageData(urlString: recipe.image ?? "") { result in
                 switch result {
                 case .success(let fact):
                     data.append(fact)

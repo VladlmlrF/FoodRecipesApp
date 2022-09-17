@@ -1,16 +1,17 @@
 //
-//  RecipesListViewController.swift
+//  FavoriteListViewController.swift
 //  FoodRecipesApp
 //
-//  Created by Владимир Фалин on 09.09.2022.
+//  Created by Владимир Фалин on 15.09.2022.
 //
 
 import UIKit
+//import RealmSwift
 
-class RecipesListViewController: UIViewController {
-
-    var presenter: RecipesListOutput!
-    private let cellIdentifier = "recipeCell"
+class FavoriteListViewController: UIViewController {
+    
+    var presenter: FavoriteListViewPresenter!
+    private let cellIdentifier = "savedRecipeCell"
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -20,17 +21,10 @@ class RecipesListViewController: UIViewController {
         layout.minimumInteritemSpacing = 0
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.register(RecipeCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        collection.register(SavedRecipeCell.self, forCellWithReuseIdentifier: cellIdentifier)
         collection.backgroundColor = .white
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
-    }()
-    
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(style: .large)
-        activity.translatesAutoresizingMaskIntoConstraints = false
-        activity.hidesWhenStopped = true
-        return activity
     }()
     
     //MARK: - View life cycle
@@ -42,14 +36,17 @@ class RecipesListViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         view.addSubview(collectionView)
-        view.addSubview(activityIndicator)
         setConstraints()
-        activityIndicator.startAnimating()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
     }
     
     //MARK: - private methods
     private func setupNavigationBar() {
-        title = "Food Recipes"
+        title = "Favorite Recipes"
         navigationController?.navigationBar.prefersLargeTitles = true
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
@@ -65,45 +62,47 @@ class RecipesListViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
 
 //MARK: - UICollectionViewDelegate
-extension RecipesListViewController: UICollectionViewDelegate {
+extension FavoriteListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let recipe = presenter?.recipes?[indexPath.item]
-        presenter.tapOnRecipe(recipe: recipe)
+//        let recipe = presenter?.recipes?[indexPath.item]
+//        presenter.tapOnRecipe(recipe: recipe)
     }
 }
 
 //MARK: - UICollectionViewDataSource
-extension RecipesListViewController: UICollectionViewDataSource {
+extension FavoriteListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         presenter?.numberOfItems() ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? RecipeCell else { return UICollectionViewCell() }
-        let recipe = presenter.recipes?[indexPath.item]
-        cell.nameLabel.text = recipe?.title
-        cell.ingredientsCountLabel.text = "\(recipe?.extendedIngredients.count ?? 0) ingredients"
-        if let imageData = presenter.imageData {
-            cell.imageView.image = imageData.indices.contains(indexPath.item) ? UIImage(data: imageData[indexPath.item]) : UIImage(named: "noImage")
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? SavedRecipeCell else { return UICollectionViewCell() }
+        guard let savedRecipeList = presenter.savedRecipeList else { return UICollectionViewCell() }
+        let savedRecipe = savedRecipeList[indexPath.item]
+        cell.nameLabel.text = savedRecipe.title
+        if let cachedImage = ImageCacheManager.shared.object(forKey: savedRecipe.title as NSString) {
+            cell.imageView.image = cachedImage
+        } else {
+            presenter.fetchImage(savedRecipe: savedRecipe) { data in
+                cell.imageView.image = UIImage(data: data)
+                if let image = UIImage(data: data) {
+                    ImageCacheManager.shared.setObject(image, forKey: savedRecipe.title as NSString)
+                }
+            }
         }
-        
         return cell
     }
 }
 
 //MARK: - RecipesListInput
-extension RecipesListViewController: RecipesListInput {
+extension FavoriteListViewController: FavoriteListInput {
     func getRecipes() {
-        activityIndicator.stopAnimating()
         collectionView.reloadData()
     }
 }

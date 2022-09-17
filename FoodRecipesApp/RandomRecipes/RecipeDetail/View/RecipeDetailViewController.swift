@@ -31,6 +31,8 @@ class RecipeDetailViewController: UIViewController {
         tableview.delegate = self
         view.addSubview(tableview)
         setConstraints()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveRecipe))
     }
     
     //MARK: - private methods
@@ -46,6 +48,14 @@ class RecipeDetailViewController: UIViewController {
     @objc private func toInstructions() {
         guard let recipe = presenter.recipe else { return }
         presenter.showInstructions(recipe: recipe)
+    }
+    
+    @objc private func saveRecipe() {
+//        DispatchQueue.main.async { [weak self] in
+//            StorageManagerImplementation.shared.save(title: self?.presenter.recipe?.title ?? "", instruction: self?.presenter.recipe?.instructions ?? "", imageUrlString: self?.presenter.recipe?.image ?? "", recipe: (self?.presenter.recipe!)!)
+//        }
+        
+        presenter.saveRecipe()
     }
 }
 
