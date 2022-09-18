@@ -15,9 +15,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let recipesListViewController = RecipesListViewController()
-        let navigationController = UINavigationController(rootViewController: recipesListViewController)
-        window?.rootViewController = navigationController
+        let randomRecipeListNavController = UINavigationController()
+        let favoriteListNavController = UINavigationController()
+        let assemblyBuilder = AssemblyBuilderImplementation()
+        let routerRandom = RouterImplementation(navigationController: randomRecipeListNavController, assemblyBuilder: assemblyBuilder)
+        routerRandom.initialViewController()
+        let routerFavorite = RouterImplementation(navigationController: favoriteListNavController, assemblyBuilder: assemblyBuilder)
+        routerFavorite.showFavoriteRecipeList()
+        let mainTabBarController = UITabBarController()
+        mainTabBarController.tabBar.tintColor = .red
+        mainTabBarController.setViewControllers([randomRecipeListNavController, favoriteListNavController], animated: true)
+        window?.rootViewController = mainTabBarController
+        randomRecipeListNavController.tabBarItem = UITabBarItem(title: "Food Recipes", image: UIImage(systemName: "note.text"), tag: 0)
+        favoriteListNavController.tabBarItem = UITabBarItem(title: "Favorite Recipes", image: UIImage(systemName: "heart"), tag: 1)
         window?.makeKeyAndVisible()
     }
 
@@ -49,7 +59,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
-        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
+        //(UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 
 
