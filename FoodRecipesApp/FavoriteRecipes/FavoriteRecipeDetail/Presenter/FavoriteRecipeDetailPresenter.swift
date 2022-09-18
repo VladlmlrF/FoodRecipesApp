@@ -7,26 +7,24 @@
 
 import Foundation
 
-//MARK: - RecipeDetail input protocol
+//MARK: - FavoriteRecipeDetail input protocol
 protocol FavoriteRecipeDetailInput: AnyObject {
     func setRecipe()
 }
 
-//MARK: - RecipeDetail output protocol
+//MARK: - FavoriteRecipeDetail output protocol
 protocol FavoriteRecipeDetailOutput: AnyObject {
     var savedRecipe: SavedRecipe? { get set }
-    var imageData: Data? { get set }
     init(view: FavoriteRecipeDetailInput, storageManager: StorageManager, router: Router, savedRecipe: SavedRecipe?)
     func deleteRecipe()
 }
 
-//MARK: - RecipeDetailPresenter
+//MARK: - FavoriteRecipeDetailPresenter
 class FavoriteRecipeDetailPresenter: FavoriteRecipeDetailOutput {
     weak var view: FavoriteRecipeDetailInput!
     let storageManager: StorageManager!
     let router: Router!
     var savedRecipe: SavedRecipe?
-    var imageData: Data?
     
     required init(view: FavoriteRecipeDetailInput, storageManager: StorageManager, router: Router, savedRecipe: SavedRecipe?) {
         self .view = view

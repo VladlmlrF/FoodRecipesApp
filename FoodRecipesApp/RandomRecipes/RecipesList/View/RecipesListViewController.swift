@@ -14,7 +14,10 @@ class RecipesListViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 40, height: UIScreen.main.bounds.height / 3)
+        layout.itemSize = CGSize(
+            width: UIScreen.main.bounds.width - 40,
+            height: UIScreen.main.bounds.height / 3
+        )
         layout.sectionInset = UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
         layout.minimumLineSpacing = 5
         layout.minimumInteritemSpacing = 0
@@ -23,6 +26,8 @@ class RecipesListViewController: UIViewController {
         collection.register(RecipeCell.self, forCellWithReuseIdentifier: cellIdentifier)
         collection.backgroundColor = .white
         collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.dataSource = self
+        collection.delegate = self
         return collection
     }()
     
@@ -39,8 +44,6 @@ class RecipesListViewController: UIViewController {
 
         view.backgroundColor = .white
         setupNavigationBar()
-        collectionView.dataSource = self
-        collectionView.delegate = self
         view.addSubview(collectionView)
         view.addSubview(activityIndicator)
         setConstraints()
@@ -89,13 +92,21 @@ extension RecipesListViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? RecipeCell else { return UICollectionViewCell() }
-        let recipe = presenter.recipes?[indexPath.item]
-        cell.nameLabel.text = recipe?.title
-        cell.ingredientsCountLabel.text = "\(recipe?.extendedIngredients.count ?? 0) ingredients"
-        if let imageData = presenter.imageData {
-            cell.imageView.image = imageData.indices.contains(indexPath.item) ? UIImage(data: imageData[indexPath.item]) : UIImage(named: "noImage")
-        }
+        guard let recipe = presenter.recipes?[indexPath.item] else { return UICollectionViewCell() }
+        cell.nameLabel.text = recipe.title
+        cell.ingredientsCountLabel.text = "\(recipe.extendedIngredients.count) ingredients"
         
+        if let cacheImage = ImageCacheManager.shared.object(forKey: recipe.title as NSString) {
+            cell.imageView.image = cacheImage
+        } else {
+            if let imageData = presenter.imageData {
+                cell.imageView.image = imageData.indices.contains(indexPath.item) ? UIImage(data: imageData[indexPath.item]) : UIImage(named: "noImage")
+                if let image = cell.imageView.image {
+                    ImageCacheManager.shared.setObject(image, forKey: recipe.title as NSString)
+                }
+            }
+        }
+            
         return cell
     }
 }

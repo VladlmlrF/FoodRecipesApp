@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecipeDetailViewController: UIViewController {
+class RecipeDetailViewController: UIViewController, RecipeDetailInput {
 
     var presenter: RecipeDetailOutput!
     private let cellIdentifier = "recipeDetailCell"
@@ -51,10 +51,6 @@ class RecipeDetailViewController: UIViewController {
     }
     
     @objc private func saveRecipe() {
-//        DispatchQueue.main.async { [weak self] in
-//            StorageManagerImplementation.shared.save(title: self?.presenter.recipe?.title ?? "", instruction: self?.presenter.recipe?.instructions ?? "", imageUrlString: self?.presenter.recipe?.image ?? "", recipe: (self?.presenter.recipe!)!)
-//        }
-        
         presenter.saveRecipe()
     }
 }
@@ -62,7 +58,7 @@ class RecipeDetailViewController: UIViewController {
 //MARK: - UITableViewDataSource
 extension RecipeDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.recipe?.extendedIngredients.count ?? 0
+        presenter.numberOfRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,11 +77,14 @@ extension RecipeDetailViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let recipe = presenter.recipe else { return UIView() }
         let headerView = RecipeDetailHeaderView()
         headerView.label.text = "Ingredients"
-        if let imageData = presenter.imageData {
-            headerView.foodImageView.image = UIImage(data: imageData)
+        
+        if let cacheImage = ImageCacheManager.shared.object(forKey: recipe.title as NSString) {
+            headerView.foodImageView.image = cacheImage
         }
+        
         return headerView
     }
     
@@ -101,12 +100,5 @@ extension RecipeDetailViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         60
-    }
-}
-
-//MARK: - RecipeDetailInput
-extension RecipeDetailViewController: RecipeDetailInput {
-    func setRecipe() {
-        tableview.reloadData()
     }
 }

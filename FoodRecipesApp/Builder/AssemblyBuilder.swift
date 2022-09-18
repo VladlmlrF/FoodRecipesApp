@@ -26,17 +26,15 @@ class AssemblyBuilderImplementation: AssemblyBuilder {
     
     func createRecipeDetail(recipe: Recipe?, router: Router) -> UIViewController {
         let view = RecipeDetailViewController()
-        let networkManager = NetworkManagerImplementation()
         let storageManager = StorageManagerImplementation()
-        let presenter = RecipeDetailPresenter(view: view, networkManager: networkManager, storageManager: storageManager, router: router, recipe: recipe)
+        let presenter = RecipeDetailPresenter(view: view, storageManager: storageManager, router: router, recipe: recipe)
         view.presenter = presenter
         return view
     }
     
     func createInstructions(recipe: Recipe?, router: Router) -> UIViewController {
         let view = InstructionsViewController()
-        let networkManager = NetworkManagerImplementation()
-        let presenter = InstructionsPresenter(view: view, networkManager: networkManager, router: router, recipe: recipe)
+        let presenter = InstructionsPresenter(view: view, recipe: recipe)
         view.presenter = presenter
         return view
     }

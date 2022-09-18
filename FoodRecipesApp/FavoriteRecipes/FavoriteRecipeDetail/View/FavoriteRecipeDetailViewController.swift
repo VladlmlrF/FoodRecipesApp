@@ -97,7 +97,6 @@ extension FavoriteRecipeDetailViewController: UITableViewDelegate {
         }
         
         return headerView
-        
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

@@ -47,7 +47,6 @@ class RecipesListViewPresenter: RecipesListOutput {
                     self?.fetchImageData(recipes: foodRecipes.recipes)
                     self?.view.getRecipes()
                 }
-                
             case .failure(let error):
                 print(error.localizedDescription)
             }
