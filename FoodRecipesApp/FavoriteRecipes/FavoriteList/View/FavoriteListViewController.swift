@@ -70,8 +70,8 @@ class FavoriteListViewController: UIViewController {
 //MARK: - UICollectionViewDelegate
 extension FavoriteListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let recipe = presenter?.recipes?[indexPath.item]
-//        presenter.tapOnRecipe(recipe: recipe)
+        let savedRecipe = presenter?.savedRecipeList?[indexPath.item]
+        presenter.tapOnRecipe(savedRecipe: savedRecipe)
     }
 }
 

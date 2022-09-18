@@ -19,7 +19,7 @@ protocol FavoriteListOutput: AnyObject {
     init(view: FavoriteListInput, storageManager: StorageManager, networkManager: NetworkManager, router: Router)
     func fetchRecipes()
     func numberOfItems() -> Int
-    func tapOnRecipe(recipe: Recipe?)
+    func tapOnRecipe(savedRecipe: SavedRecipe?)
     func fetchImage(savedRecipe: SavedRecipe, completion: @escaping(Data) -> ())
 }
 
@@ -65,7 +65,7 @@ class FavoriteListViewPresenter: FavoriteListOutput {
         return numberOfItems
     }
     
-    func tapOnRecipe(recipe: Recipe?) {
-        router.showDetail(recipe: recipe)
+    func tapOnRecipe(savedRecipe: SavedRecipe?) {
+        router.showFavoriteDetail(savedRecipe: savedRecipe)
     }
 }

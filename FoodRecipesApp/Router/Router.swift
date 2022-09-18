@@ -17,6 +17,7 @@ protocol Router: RouterMain {
     func showFavoriteRecipeList()
     func showDetail(recipe: Recipe?)
     func showInstructions(recipe: Recipe?)
+    func showFavoriteDetail(savedRecipe: SavedRecipe?)
 }
 
 class RouterImplementation: Router {
@@ -50,5 +51,10 @@ class RouterImplementation: Router {
     func showInstructions(recipe: Recipe?) {
         guard let instructionsVC = assemblyBuilder?.createInstructions(recipe: recipe, router: self) else { return }
         navigationController?.present(instructionsVC, animated: true)
+    }
+    
+    func showFavoriteDetail(savedRecipe: SavedRecipe?) {
+        guard let favoriteRecipeDetailVC = assemblyBuilder?.createFavoriteRecipeDetail(savedRecipe: savedRecipe, router: self) else { return }
+        navigationController?.pushViewController(favoriteRecipeDetailVC, animated: true)
     }
 }

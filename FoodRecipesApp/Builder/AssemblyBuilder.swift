@@ -12,6 +12,7 @@ protocol AssemblyBuilder {
     func createRecipeDetail(recipe: Recipe?, router: Router) -> UIViewController
     func createInstructions(recipe: Recipe?, router: Router) -> UIViewController
     func createFavoriteList(router: Router) -> UIViewController
+    func createFavoriteRecipeDetail(savedRecipe: SavedRecipe?, router: Router) -> UIViewController
 }
 
 class AssemblyBuilderImplementation: AssemblyBuilder {
@@ -45,6 +46,14 @@ class AssemblyBuilderImplementation: AssemblyBuilder {
         let storageManager = StorageManagerImplementation()
         let networkManager = NetworkManagerImplementation()
         let presenter = FavoriteListViewPresenter(view: view, storageManager: storageManager, networkManager: networkManager, router: router)
+        view.presenter = presenter
+        return view
+    }
+    
+    func createFavoriteRecipeDetail(savedRecipe: SavedRecipe?, router: Router) -> UIViewController {
+        let view = FavoriteRecipeDetailViewController()
+        let storageManager = StorageManagerImplementation()
+        let presenter = FavoriteRecipeDetailPresenter(view: view, storageManager: storageManager, router: router, savedRecipe: savedRecipe)
         view.presenter = presenter
         return view
     }
