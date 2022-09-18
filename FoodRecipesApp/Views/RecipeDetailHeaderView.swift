@@ -18,10 +18,9 @@ class RecipeDetailHeaderView: UIView {
         return imageView
     }()
     
-    lazy var ingredientsLabel: UILabel = {
+    lazy var label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Ingredients"
         label.font = .boldSystemFont(ofSize: 20)
         return label
     }()
@@ -31,7 +30,7 @@ class RecipeDetailHeaderView: UIView {
         
         backgroundColor = .white
         addSubview(foodImageView)
-        addSubview(ingredientsLabel)
+        addSubview(label)
         setConstraints()
     }
     
@@ -46,9 +45,9 @@ class RecipeDetailHeaderView: UIView {
             foodImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             foodImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -35),
             
-            ingredientsLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            ingredientsLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            ingredientsLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
+            label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            label.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -5)
         ])
     }
     

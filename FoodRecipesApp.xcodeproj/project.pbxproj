@@ -30,8 +30,9 @@
 		1AD557E228D386A800A5444F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1AD557E128D386A800A5444F /* RealmSwift */; };
 		1AD557E428D38CA000A5444F /* SavedRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557E328D38CA000A5444F /* SavedRecipe.swift */; };
 		1AD557E628D38DA700A5444F /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557E528D38DA700A5444F /* StorageManager.swift */; };
-		1AD557E828D4CEEF00A5444F /* SavedRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557E728D4CEEF00A5444F /* SavedRecipeCell.swift */; };
 		1AD557EE28D63B1700A5444F /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557ED28D63B1700A5444F /* ImageCacheManager.swift */; };
+		1AD557F328D7056D00A5444F /* FavoriteRecipeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557F228D7056D00A5444F /* FavoriteRecipeDetailViewController.swift */; };
+		1AD557F528D7058200A5444F /* FavoriteRecipeDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD557F428D7058200A5444F /* FavoriteRecipeDetailPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,8 +59,9 @@
 		1AD557CC28D361E400A5444F /* FavoriteListViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteListViewPresenter.swift; sourceTree = "<group>"; };
 		1AD557E328D38CA000A5444F /* SavedRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedRecipe.swift; sourceTree = "<group>"; };
 		1AD557E528D38DA700A5444F /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
-		1AD557E728D4CEEF00A5444F /* SavedRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedRecipeCell.swift; sourceTree = "<group>"; };
 		1AD557ED28D63B1700A5444F /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		1AD557F228D7056D00A5444F /* FavoriteRecipeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipeDetailViewController.swift; sourceTree = "<group>"; };
+		1AD557F428D7058200A5444F /* FavoriteRecipeDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipeDetailPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				1AD557C328D0BAEA00A5444F /* RandomRecipes */,
 				1AD557C428D0BCAB00A5444F /* FavoriteRecipes */,
 				1AD5579928CBA2AC00A5444F /* Models */,
+				1AD557F628D72EDD00A5444F /* Views */,
 				1AD5579F28CBBDD200A5444F /* Services */,
 				1AD5579728CBA27200A5444F /* Storyboards */,
 				1AD5579828CBA28100A5444F /* Resources */,
@@ -155,7 +158,6 @@
 			isa = PBXGroup;
 			children = (
 				1AD5579428CBA0D300A5444F /* RecipesListViewController.swift */,
-				1AD557A428CC775E00A5444F /* RecipeCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -215,7 +217,6 @@
 			isa = PBXGroup;
 			children = (
 				1AD557B128CE1B1800A5444F /* RecipeDetailViewController.swift */,
-				1AD557B528CE3BA900A5444F /* RecipeDetailHeaderView.swift */,
 				1AD557B728CE53D000A5444F /* RecipeDetailFooterView.swift */,
 			);
 			path = View;
@@ -260,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				1AD557C728D3611D00A5444F /* FavoriteList */,
+				1AD557EF28D704C700A5444F /* FavoriteRecipeDetail */,
 			);
 			path = FavoriteRecipes;
 			sourceTree = "<group>";
@@ -277,7 +279,6 @@
 			isa = PBXGroup;
 			children = (
 				1AD557CA28D361C100A5444F /* FavoriteListViewController.swift */,
-				1AD557E728D4CEEF00A5444F /* SavedRecipeCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -288,6 +289,40 @@
 				1AD557CC28D361E400A5444F /* FavoriteListViewPresenter.swift */,
 			);
 			path = Presenter;
+			sourceTree = "<group>";
+		};
+		1AD557EF28D704C700A5444F /* FavoriteRecipeDetail */ = {
+			isa = PBXGroup;
+			children = (
+				1AD557F028D704FC00A5444F /* View */,
+				1AD557F128D7051100A5444F /* Presenter */,
+			);
+			path = FavoriteRecipeDetail;
+			sourceTree = "<group>";
+		};
+		1AD557F028D704FC00A5444F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1AD557F228D7056D00A5444F /* FavoriteRecipeDetailViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1AD557F128D7051100A5444F /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				1AD557F428D7058200A5444F /* FavoriteRecipeDetailPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		1AD557F628D72EDD00A5444F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1AD557A428CC775E00A5444F /* RecipeCell.swift */,
+				1AD557B528CE3BA900A5444F /* RecipeDetailHeaderView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -374,7 +409,7 @@
 				1AD557CD28D361E400A5444F /* FavoriteListViewPresenter.swift in Sources */,
 				1AD557BF28CF6C3200A5444F /* InstructionsPresenter.swift in Sources */,
 				1AD5577E28CBA01800A5444F /* AppDelegate.swift in Sources */,
-				1AD557E828D4CEEF00A5444F /* SavedRecipeCell.swift in Sources */,
+				1AD557F328D7056D00A5444F /* FavoriteRecipeDetailViewController.swift in Sources */,
 				1AD557EE28D63B1700A5444F /* ImageCacheManager.swift in Sources */,
 				1AD557E628D38DA700A5444F /* StorageManager.swift in Sources */,
 				1AD557AA28CCB33B00A5444F /* AssemblyBuilder.swift in Sources */,
@@ -386,6 +421,7 @@
 				1AD557BD28CF6C1100A5444F /* InstructionsViewController.swift in Sources */,
 				1AD557B228CE1B1800A5444F /* RecipeDetailViewController.swift in Sources */,
 				1AD5578028CBA01800A5444F /* SceneDelegate.swift in Sources */,
+				1AD557F528D7058200A5444F /* FavoriteRecipeDetailPresenter.swift in Sources */,
 				1AD557B628CE3BA900A5444F /* RecipeDetailHeaderView.swift in Sources */,
 				1AD5579E28CBB5BB00A5444F /* FoodRecipes.swift in Sources */,
 			);

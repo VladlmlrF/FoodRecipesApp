@@ -1,16 +1,16 @@
 //
-//  RecipeDetailViewController.swift
+//  FavoriteRecipeDetailViewController.swift
 //  FoodRecipesApp
 //
-//  Created by Владимир Фалин on 11.09.2022.
+//  Created by Владимир Фалин on 18.09.2022.
 //
 
 import UIKit
 
-class RecipeDetailViewController: UIViewController, RecipeDetailInput {
+class FavoriteRecipeDetailViewController: UIViewController {
 
-    var presenter: RecipeDetailOutput!
-    private let cellIdentifier = "recipeDetailCell"
+    var presenter: FavoriteRecipeDetailOutput!
+    private let cellIdentifier = "favoriteRecipeDetailCell"
     
     private lazy var tableview: UITableView = {
         let tableview = UITableView(frame: .zero, style: .grouped)
@@ -26,13 +26,13 @@ class RecipeDetailViewController: UIViewController, RecipeDetailInput {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-        title = presenter.recipe?.title
+        title = presenter.savedRecipe?.title
         tableview.dataSource = self
         tableview.delegate = self
         view.addSubview(tableview)
         setConstraints()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveRecipe))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(deleteRecipe))
     }
     
     //MARK: - private methods
@@ -45,60 +45,71 @@ class RecipeDetailViewController: UIViewController, RecipeDetailInput {
         ])
     }
     
-    @objc private func toInstructions() {
-        guard let recipe = presenter.recipe else { return }
-        presenter.showInstructions(recipe: recipe)
-    }
-    
-    @objc private func saveRecipe() {
-        presenter.saveRecipe()
+    @objc private func deleteRecipe() {
+        presenter.deleteRecipe()
     }
 }
 
 //MARK: - UITableViewDataSource
-extension RecipeDetailViewController: UITableViewDataSource {
+extension FavoriteRecipeDetailViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.numberOfRows()
+        var numberOfRows = 1
+        if section == 0 {
+            numberOfRows = presenter.savedRecipe?.ingredients.count ?? 0
+        }
+        return numberOfRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableview.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         var content = cell.defaultContentConfiguration()
-        content.text = presenter.recipe?.extendedIngredients[indexPath.row].original
+        if indexPath.section == 0 {
+            content.text = presenter.savedRecipe?.ingredients[indexPath.row].ingredient
+        } else {
+            content.text = presenter.savedRecipe?.instruction
+        }
         cell.contentConfiguration = content
         return cell
     }
 }
 
 //MARK: - UITableViewDelegate
-extension RecipeDetailViewController: UITableViewDelegate {
+extension FavoriteRecipeDetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableview.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let recipe = presenter.recipe else { return UIView() }
         let headerView = RecipeDetailHeaderView()
-        headerView.label.text = "Ingredients"
-        
-        if let cacheImage = ImageCacheManager.shared.object(forKey: recipe.title as NSString) {
-            headerView.foodImageView.image = cacheImage
+        if section == 0 {
+            headerView.label.text = "Ingredients"
+            if let savedRecipe = presenter.savedRecipe {
+                headerView.foodImageView.image = ImageCacheManager.shared.object(forKey: savedRecipe.title as NSString)
+            }
+        } else {
+            headerView.label.text = "Instruction"
+            headerView.foodImageView.image = nil
         }
         
         return headerView
     }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = RecipeDetailFooterView()
-        footerView.instructionsButton.addTarget(self, action: #selector(toInstructions), for: .touchUpInside)
-        return footerView
-    }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        view.frame.height / 3
+        if section == 0 {
+            return  view.frame.height / 3
+        }
+        return 25
     }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        60
+}
+
+//MARK: - RecipeDetailInput
+extension FavoriteRecipeDetailViewController: FavoriteRecipeDetailInput {
+    func setRecipe() {
+        tableview.reloadData()
     }
 }

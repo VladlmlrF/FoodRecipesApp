@@ -11,12 +11,6 @@ class InstructionsViewController: UIViewController {
 
     //MARK: - properties
     var presenter: InstructionsOutput!
-    lazy var instructionsLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.numberOfLines = 0
-        return label
-    }()
     
     lazy var doneButton: UIButton = {
         let button = UIButton(type: .close)

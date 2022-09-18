@@ -17,10 +17,6 @@ protocol StorageManager: AnyObject {
 
 class StorageManagerImplementation: StorageManager {
     
-//    static let shared = StorageManagerImplementation()
-//
-//    private init() {}
-    
     var realm = try? Realm()
     
     func save(title: String, instruction: String, imageUrlString: String, recipe: Recipe) {

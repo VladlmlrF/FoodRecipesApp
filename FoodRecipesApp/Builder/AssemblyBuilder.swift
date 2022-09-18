@@ -12,6 +12,7 @@ protocol AssemblyBuilder {
     func createRecipeDetail(recipe: Recipe?, router: Router) -> UIViewController
     func createInstructions(recipe: Recipe?, router: Router) -> UIViewController
     func createFavoriteList(router: Router) -> UIViewController
+    func createFavoriteRecipeDetail(savedRecipe: SavedRecipe?, router: Router) -> UIViewController
 }
 
 class AssemblyBuilderImplementation: AssemblyBuilder {
@@ -25,17 +26,15 @@ class AssemblyBuilderImplementation: AssemblyBuilder {
     
     func createRecipeDetail(recipe: Recipe?, router: Router) -> UIViewController {
         let view = RecipeDetailViewController()
-        let networkManager = NetworkManagerImplementation()
         let storageManager = StorageManagerImplementation()
-        let presenter = RecipeDetailPresenter(view: view, networkManager: networkManager, storageManager: storageManager, router: router, recipe: recipe)
+        let presenter = RecipeDetailPresenter(view: view, storageManager: storageManager, router: router, recipe: recipe)
         view.presenter = presenter
         return view
     }
     
     func createInstructions(recipe: Recipe?, router: Router) -> UIViewController {
         let view = InstructionsViewController()
-        let networkManager = NetworkManagerImplementation()
-        let presenter = InstructionsPresenter(view: view, networkManager: networkManager, router: router, recipe: recipe)
+        let presenter = InstructionsPresenter(view: view, recipe: recipe)
         view.presenter = presenter
         return view
     }
@@ -45,6 +44,14 @@ class AssemblyBuilderImplementation: AssemblyBuilder {
         let storageManager = StorageManagerImplementation()
         let networkManager = NetworkManagerImplementation()
         let presenter = FavoriteListViewPresenter(view: view, storageManager: storageManager, networkManager: networkManager, router: router)
+        view.presenter = presenter
+        return view
+    }
+    
+    func createFavoriteRecipeDetail(savedRecipe: SavedRecipe?, router: Router) -> UIViewController {
+        let view = FavoriteRecipeDetailViewController()
+        let storageManager = StorageManagerImplementation()
+        let presenter = FavoriteRecipeDetailPresenter(view: view, storageManager: storageManager, router: router, savedRecipe: savedRecipe)
         view.presenter = presenter
         return view
     }

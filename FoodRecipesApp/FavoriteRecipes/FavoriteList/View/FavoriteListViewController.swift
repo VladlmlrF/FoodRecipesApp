@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//import RealmSwift
 
 class FavoriteListViewController: UIViewController {
     
@@ -21,7 +20,7 @@ class FavoriteListViewController: UIViewController {
         layout.minimumInteritemSpacing = 0
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.register(SavedRecipeCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        collection.register(RecipeCell.self, forCellWithReuseIdentifier: cellIdentifier)
         collection.backgroundColor = .white
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
@@ -70,8 +69,8 @@ class FavoriteListViewController: UIViewController {
 //MARK: - UICollectionViewDelegate
 extension FavoriteListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let recipe = presenter?.recipes?[indexPath.item]
-//        presenter.tapOnRecipe(recipe: recipe)
+        let savedRecipe = presenter?.savedRecipeList?[indexPath.item]
+        presenter.tapOnRecipe(savedRecipe: savedRecipe)
     }
 }
 
@@ -82,7 +81,7 @@ extension FavoriteListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? SavedRecipeCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? RecipeCell else { return UICollectionViewCell() }
         guard let savedRecipeList = presenter.savedRecipeList else { return UICollectionViewCell() }
         let savedRecipe = savedRecipeList[indexPath.item]
         cell.nameLabel.text = savedRecipe.title
