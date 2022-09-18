@@ -82,6 +82,7 @@ extension RecipeDetailViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = RecipeDetailHeaderView()
+        headerView.label.text = "Ingredients"
         if let imageData = presenter.imageData {
             headerView.foodImageView.image = UIImage(data: imageData)
         }

@@ -45,26 +45,34 @@ class FavoriteRecipeDetailViewController: UIViewController {
         ])
     }
     
-    @objc private func toInstructions() {
-        guard let savedRecipe = presenter.savedRecipe else { return }
-        presenter.showInstructions(savedRecipe: savedRecipe)
-    }
-    
     @objc private func deleteRecipe() {
-        
+        presenter.deleteRecipe()
     }
 }
 
 //MARK: - UITableViewDataSource
 extension FavoriteRecipeDetailViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.savedRecipe?.ingredients.count ?? 0
+        var numberOfRows = 1
+        if section == 0 {
+            numberOfRows = presenter.savedRecipe?.ingredients.count ?? 0
+        }
+        return numberOfRows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableview.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         var content = cell.defaultContentConfiguration()
-        content.text = presenter.savedRecipe?.ingredients[indexPath.row].ingredient
+        if indexPath.section == 0 {
+            content.text = presenter.savedRecipe?.ingredients[indexPath.row].ingredient
+        } else {
+            content.text = presenter.savedRecipe?.instruction
+        }
         cell.contentConfiguration = content
         return cell
     }
@@ -78,24 +86,25 @@ extension FavoriteRecipeDetailViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = RecipeDetailHeaderView()
-        if let savedRecipe = presenter.savedRecipe {
-            headerView.foodImageView.image = ImageCacheManager.shared.object(forKey: savedRecipe.title as NSString)
+        if section == 0 {
+            headerView.label.text = "Ingredients"
+            if let savedRecipe = presenter.savedRecipe {
+                headerView.foodImageView.image = ImageCacheManager.shared.object(forKey: savedRecipe.title as NSString)
+            }
+        } else {
+            headerView.label.text = "Instruction"
+            headerView.foodImageView.image = nil
         }
+        
         return headerView
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = RecipeDetailFooterView()
-        footerView.instructionsButton.addTarget(self, action: #selector(toInstructions), for: .touchUpInside)
-        return footerView
+        
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        view.frame.height / 3
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        60
+        if section == 0 {
+            return  view.frame.height / 3
+        }
+        return 25
     }
 }
 
